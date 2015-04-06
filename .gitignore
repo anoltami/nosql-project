@@ -35,3 +35,7 @@ build/
 
 # ingnore mongo database
 /db
+
+gmail
+node_modules
+*.log
