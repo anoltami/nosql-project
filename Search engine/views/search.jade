@@ -1,0 +1,15 @@
+.page-header
+    h3 Résultat de la recherche
+
+.row
+    .span12
+        table.table.table-bordered
+            thead
+                tr
+                    th Nom
+                    th Prénom
+            tbody
+                each document in result.hits.hits
+                  tr
+                    td= document._source.name
+                    td= document._source.firstname

@@ -1,0 +1,16 @@
+{
+  "name": "Helloeverybody",
+  "version": "0.1.0",
+  "dependencies": {
+    "elasticsearchclient": ">=0.2.1",
+    "express": "2.5.x",
+    "jade": ">= 0.0.1",
+    "url": "^0.10.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "supervisor app.js"
+  }
+}
