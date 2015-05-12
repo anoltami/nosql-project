@@ -5,7 +5,13 @@
           br
           p Hello everybody est un moteur de recherche de personnes. Il utilise une base de donnée elasticsearch et un serveur node js.
 
-          p Entrer “*” or “n'importe quoi” dans la barre de recherche et appuyer sur enter pour visualiser les résultats.
+          p Entrer votre recherche dans la barre de recherche et appuyer sur enter pour visualiser les résultats.
+          
+          hr
+
+          form(method="get", class="search-div", action="/search")
+            label(for='q') Votre recherche :
+            input(type="text", name="q", placeholder="Recherche...", class="span10 search-input")
 
         if result
           if (result == "Error: connect ECONNREFUSED")

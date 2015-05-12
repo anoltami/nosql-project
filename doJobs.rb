@@ -6,6 +6,7 @@ require 'rubygems'
 require 'nokogiri'   
 require 'open-uri'
 require './job'
+require './utils'
 
 
 $r = Redis.new
@@ -38,6 +39,10 @@ def getJobsUndo
 	statusJobs
 end
 
+def addJob job
+	$r.rpush('jobsUnDo', job.toJson)
+end
+
 def doJob job
 	puts "#{job.method} sur #{job.url}"
 
@@ -46,22 +51,30 @@ def doJob job
 	  webPage = Nokogiri::HTML(open(job.url))
 	rescue Exception => e
 	  puts "Impossible d'exploiter \"#{ job.url }\" : #{ e }"
-	  exit
+	else
+		#LINKED IN
+		# Récupération des localités
+		# localities = webPage.css('.locality')
+		# for x in localities
+		# 	puts x.text
+		# end
+
+		#GITHUB
+		githubOrgs = JSON.parse webPage
+		githubOrgs.each do |githubOrg| 
+			if githubOrg["organizations_url"] != ""
+				addJob Job.new('GET', githubOrg["organizations_url"])
+			end
+		end
+		#sleep 1
+		puts "#{job.url} traité"
+	ensure
+		$r.rpush('jobsDone', job.toJson)
 	end
 
-
-	#LINKED IN
-	# Récupération des localités
-	localities = webPage.css('.locality')
-	for x in localities
-		puts x.text
-	end
 
 	
 
-	$r.rpush('jobsDone', job.toJson)
-	sleep 3
-	puts "#{job.url} traité"
 end
 
 def statusJobs

@@ -38,10 +38,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/search', function (req, res) {
+    var searchString = req.query.q || '*';
+    //searchString = searchString.replace(/^\s+|\s+$/g,'').replace(/ /g, '* ') + '*';
+
     var qryObj = {
         "query":{
             "query_string":{
-                "query":req.query.q
+                "query":searchString
             }
         }
     };
@@ -61,16 +64,16 @@ app.get('/index', function (req, res) {
         function (data) {
             var commands = []
             commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Sebastien',
-                'firstname':'Patrick'});
+                'firstname':'Patrick', ville:'Toulouse'});
 
             commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Ibrahimovic',
-                'firstname':'Zlatan'});
+                'firstname':'Zlatan', ville:'Paris'});
 
             commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Merigeaux',
-                'firstname':'Maxime'});
+                'firstname':'Maxime', ville:'Cestas'});
 
             commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Cornille',
-                'firstname':'Marie-Josée'});
+                'firstname':'Marie-Josée', ville:'Bordeaux'});
 
 
             elasticSearchClient.bulk(commands, {})
@@ -92,3 +95,5 @@ var port = process.env.PORT || 5000;
 app.listen(port, function () {
     console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
+
+//curl -XDELETE localhost:9200/helloeverybody/persons

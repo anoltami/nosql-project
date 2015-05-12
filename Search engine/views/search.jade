@@ -8,8 +8,10 @@
                 tr
                     th Nom
                     th Prénom
+                    th Ville
             tbody
                 each document in result.hits.hits
                   tr
                     td= document._source.name
                     td= document._source.firstname
+                    td= document._source.ville
