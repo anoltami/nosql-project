@@ -13,7 +13,7 @@ $r.del('jobsUnDo')
 $r.del('jobsDone')
 
 terminated = 'O'
-#terminated = prompt('O', 'Ajouter un autre job ? (O/n) > ')
+
 while terminated == 'O'
 	
 	method = prompt('GET', 'Méthode (GET par défaut) > ')
@@ -22,7 +22,12 @@ while terminated == 'O'
 		url = prompt('', 'URL > ')
 	end
 
-	addJob Job.new(method, url)
+	type = ''
+	while type == ''
+		type = prompt('', 'TYPE (GithubAccount, GithubOrg, etc...) > ')
+	end
+
+	addJob Job.new(method, url, type)
 
 	terminated = prompt('O', 'Ajouter un autre job ? (O/n) > ')
 

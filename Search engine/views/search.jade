@@ -8,10 +8,18 @@
                 tr
                     th Nom
                     th Prénom
-                    th Ville
+                    th Email
+                    th Localisation
+                    th Blog
+                    th Pseudo
+                    th Github Url
             tbody
                 each document in result.hits.hits
                   tr
                     td= document._source.name
                     td= document._source.firstname
-                    td= document._source.ville
+                    td= document._source.email
+                    td= document._source.location
+                    td= document._source.blog
+                    td= document._source.pseudo
+                    td= document._source.githubUrl

@@ -34,7 +34,7 @@ app.configure(function () {
 
 // Routes
 app.get('/', function (req, res) {
-    res.render('index', {"result":""})
+    res.render('index', {"result":""});
 });
 
 app.get('/search', function (req, res) {
@@ -51,29 +51,29 @@ app.get('/search', function (req, res) {
     elasticSearchClient.search(_index, _type, qryObj)
         .on('data',
         function (data) {
-            res.render('search', { result:JSON.parse(data)})
+            res.render('search', { result:JSON.parse(data)});
         }).on('error', function (error) {
-            res.render('search', { result:error })
+            res.render('search', { result:error });
         })
-        .exec()
+        .exec();
 });
 
 
 app.get('/index', function (req, res) {
     elasticSearchClient.createIndex(_index, {}, {}).on('data',
         function (data) {
-            var commands = []
-            commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Sebastien',
-                'firstname':'Patrick', ville:'Toulouse'});
+            var commands = [];
+            commands.push({ "index":{ "_index":_index, "_type":_type} },{name:'Sebastien',
+                firstname:'Patrick', location:'Toulouse'});
 
-            commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Ibrahimovic',
-                'firstname':'Zlatan', ville:'Paris'});
+            commands.push({ "index":{ "_index":_index, "_type":_type} },{name:'Ibrahimovic',
+                firstname:'Zlatan', location:'Paris'});
 
-            commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Merigeaux',
-                'firstname':'Maxime', ville:'Cestas'});
+            commands.push({ "index":{ "_index":_index, "_type":_type} },{name:'Merigeaux',
+                firstname:'Maxime', location:'Cestas'});
 
-            commands.push({ "index":{ "_index":_index, "_type":_type} },{'name':'Cornille',
-                'firstname':'Marie-Josée', ville:'Bordeaux'});
+            commands.push({ "index":{ "_index":_index, "_type":_type} },{name:'Cornille',
+                firstname:'Marie-Josée', location:'Bordeaux'});
 
 
             elasticSearchClient.bulk(commands, {})
@@ -88,7 +88,7 @@ app.get('/index', function (req, res) {
         }).on('error', function (error) {
             res.render('index', {result:error});
         }).exec();
-})
+});
 
 var port = process.env.PORT || 5000;
 
